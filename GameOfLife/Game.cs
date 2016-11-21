@@ -30,26 +30,48 @@ namespace GameOfLife
             Grid = ngr;
         }
 
+        public static void PaintGrid(int x = 10, int y = 10)
+        {
+            for (var ix = 0; ix < x; ix++)
+            {
+                for (var iy = 0; iy < y; iy++)
+                {
+                    Console.Write(Grid[ix, iy] ? "X" : "O");
+                }
+                Console.WriteLine("");
+            }
+        }
+
         public static int GetNear(int x, int y)
         {
             int n = 0;
-            if (Grid[x - 1, y - 1]) n++;
-            if (Grid[x - 1, y]) n++;
-            if (Grid[x - 1, y + 1]) n++;
-            if (Grid[x, y-1]) n++;
-            if (Grid[x, y + 1]) n++;
-            if (Grid[x + 1, y - 1]) n++;
-            if (Grid[x + 1, y]) n++;
-            if (Grid[x + 1, y + 1]) n++;
+
+                if (CheckRes(x - 1, y - 1)) n++;
+                if (CheckRes(x - 1, y)) n++;
+                if (CheckRes(x - 1, y + 1)) n++;
+                if (CheckRes(x, y - 1)) n++;
+                if (CheckRes(x, y + 1)) n++;
+                if (CheckRes(x + 1, y - 1)) n++;
+                if (CheckRes(x + 1, y)) n++;
+                if (CheckRes(x + 1, y + 1)) n++;
+            
             return n;
         }
 
-        public static int CheckRes(int x, int y)
+        public static bool CheckRes(int x, int y)
         {
-            return GetNear(x, y);
+            try
+            {
+                return Grid[x, y];
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                //Console.WriteLine(ex);
+                return false;
+            }
         }
 
-        private static bool Check(int x, int y)
+        private static bool GetVal(int x, int y)
         {
             return Grid[x, y];
         }
@@ -62,8 +84,27 @@ namespace GameOfLife
             else return false;
         }
 
-        public static void Life(int x = 10, int y = 10)
+        public static void CheckLife(int x = 10, int y = 10)
         {
+            for (int ix = 0; ix < x; ix++)
+            {
+                for (int iy = 0; iy < x; iy++)
+                {
+                    Console.Write(GetNear(ix, iy));
+                }
+                Console.WriteLine("");
+            }
+        }
+
+        public static void MakingLife(int x = 10, int y = 10)
+        {
+            for (int ix = 0; ix < x; ix++)
+            {
+                for (int iy = 0; iy < x; iy++)
+                {
+                    Grid[ix, iy] = Transform(GetNear(ix, iy), Grid[ix, iy]);
+                }
+            }
         }
 
     }

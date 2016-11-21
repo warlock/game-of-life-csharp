@@ -15,15 +15,16 @@ namespace ConsoleApplication1
             int y = 10;
             Game.Hi();
             Game.MakeRandomGrid(x, y);
-            for (var ix = 0; ix < x; ix++)
-            {
-                for (var iy = 0; iy < y; iy++)
-                {
-                    Console.Write(Game.Grid[ix, iy]?"X":"O");
-                }
-                Console.Write("\n");
-            }
-            Console.WriteLine(Game.GetNear(2,2));
+            Game.PaintGrid();
+            Console.WriteLine("--------------------------------------");
+            Game.CheckLife();
+            Console.WriteLine("--------------------------------------");
+            Game.PaintGrid();
+            Game.MakingLife();
+            Console.WriteLine("--------------------------------------");
+            Game.PaintGrid();
+
+
 
             Console.ReadKey();
         }
