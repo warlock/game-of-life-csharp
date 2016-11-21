@@ -23,6 +23,8 @@ namespace ConsoleApplication1
                 }
                 Console.Write("\n");
             }
+            Console.WriteLine(Game.GetNear(2,2));
+
             Console.ReadKey();
         }
     }
