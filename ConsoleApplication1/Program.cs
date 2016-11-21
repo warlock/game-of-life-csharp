@@ -24,8 +24,6 @@ namespace ConsoleApplication1
             Console.WriteLine("--------------------------------------");
             Game.PaintGrid();
 
-
-
             Console.ReadKey();
         }
     }

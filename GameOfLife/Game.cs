@@ -8,20 +8,20 @@ namespace GameOfLife
 {
     public class Game
     {
-        public static void Hi()
-        {
-            Console.WriteLine("Grid");
-        }
 
+        public static int SizeX { get; set; }
+        public static int SizeY { get; set; }
         public static bool[,] Grid { get; set; }
 
         public static void MakeRandomGrid(int x = 10, int y = 10)
         {
-            bool[,] ngr = new bool[x,y];
+            SizeX = x;
+            SizeY = y;
+            bool[,] ngr = new bool[SizeX,SizeX];
             var rand = new Random();
-            for (int ix = 0; ix < x; ix++)
+            for (int ix = 0; ix < SizeX; ix++)
             {
-                for (int iy = 0; iy < y; iy++)
+                for (int iy = 0; iy < SizeY; iy++)
                 {
                     bool a = rand.Next(0, 2) == 0;
                     ngr[ix, iy] = a;
@@ -30,11 +30,11 @@ namespace GameOfLife
             Grid = ngr;
         }
 
-        public static void PaintGrid(int x = 10, int y = 10)
+        public static void PaintGrid()
         {
-            for (var ix = 0; ix < x; ix++)
+            for (var ix = 0; ix < SizeX; ix++)
             {
-                for (var iy = 0; iy < y; iy++)
+                for (var iy = 0; iy < SizeY; iy++)
                 {
                     Console.Write(Grid[ix, iy] ? "X" : "O");
                 }
@@ -45,20 +45,19 @@ namespace GameOfLife
         public static int GetNear(int x, int y)
         {
             int n = 0;
-
-                if (CheckRes(x - 1, y - 1)) n++;
-                if (CheckRes(x - 1, y)) n++;
-                if (CheckRes(x - 1, y + 1)) n++;
-                if (CheckRes(x, y - 1)) n++;
-                if (CheckRes(x, y + 1)) n++;
-                if (CheckRes(x + 1, y - 1)) n++;
-                if (CheckRes(x + 1, y)) n++;
-                if (CheckRes(x + 1, y + 1)) n++;
+                if (GetVal(x - 1, y - 1)) n++;
+                if (GetVal(x - 1, y)) n++;
+                if (GetVal(x - 1, y + 1)) n++;
+                if (GetVal(x, y - 1)) n++;
+                if (GetVal(x, y + 1)) n++;
+                if (GetVal(x + 1, y - 1)) n++;
+                if (GetVal(x + 1, y)) n++;
+                if (GetVal(x + 1, y + 1)) n++;
             
             return n;
         }
 
-        public static bool CheckRes(int x, int y)
+        public static bool GetVal(int x, int y)
         {
             try
             {
@@ -71,11 +70,6 @@ namespace GameOfLife
             }
         }
 
-        private static bool GetVal(int x, int y)
-        {
-            return Grid[x, y];
-        }
-
         public static bool Transform(int near, bool actual)
         {
             if (near == 0 && actual) return true;
@@ -84,11 +78,11 @@ namespace GameOfLife
             else return false;
         }
 
-        public static void CheckLife(int x = 10, int y = 10)
+        public static void CheckLife()
         {
-            for (int ix = 0; ix < x; ix++)
+            for (int ix = 0; ix < SizeX; ix++)
             {
-                for (int iy = 0; iy < x; iy++)
+                for (int iy = 0; iy < SizeY; iy++)
                 {
                     Console.Write(GetNear(ix, iy));
                 }
@@ -96,11 +90,11 @@ namespace GameOfLife
             }
         }
 
-        public static void MakingLife(int x = 10, int y = 10)
+        public static void MakingLife()
         {
-            for (int ix = 0; ix < x; ix++)
+            for (int ix = 0; ix < SizeX; ix++)
             {
-                for (int iy = 0; iy < x; iy++)
+                for (int iy = 0; iy < SizeY; iy++)
                 {
                     Grid[ix, iy] = Transform(GetNear(ix, iy), Grid[ix, iy]);
                 }
