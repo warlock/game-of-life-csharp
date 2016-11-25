@@ -1,40 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameOfLife
 {
     public class Game
     {
 
-        public static int SizeX { get; set; }
-        public static int SizeY { get; set; }
         public static bool[,] Grid { get; set; }
 
         public static void MakeRandomGrid(int x = 10, int y = 10)
         {
-            SizeX = x;
-            SizeY = y;
-            bool[,] ngr = new bool[SizeX,SizeX];
+            Grid = new bool[x,y];
             var rand = new Random();
-            for (int ix = 0; ix < SizeX; ix++)
+            for (int ix = 0; ix < x; ix++)
             {
-                for (int iy = 0; iy < SizeY; iy++)
+                for (int iy = 0; iy < y; iy++)
                 {
                     bool a = rand.Next(0, 2) == 0;
-                    ngr[ix, iy] = a;
+                    Grid[ix, iy] = a;
                 }
             }
-            Grid = ngr;
         }
 
         public static void PaintGrid()
         {
-            for (var ix = 0; ix < SizeX; ix++)
+            for (var ix = 0; ix < Grid.GetLength(0); ix++)
             {
-                for (var iy = 0; iy < SizeY; iy++)
+                for (var iy = 0; iy < Grid.GetLength(1); iy++)
                 {
                     Console.Write(Grid[ix, iy] ? "X" : "O");
                 }
@@ -45,15 +36,14 @@ namespace GameOfLife
         public static int GetNear(int x, int y)
         {
             int n = 0;
-                if (GetVal(x - 1, y - 1)) n++;
-                if (GetVal(x - 1, y)) n++;
-                if (GetVal(x - 1, y + 1)) n++;
-                if (GetVal(x, y - 1)) n++;
-                if (GetVal(x, y + 1)) n++;
-                if (GetVal(x + 1, y - 1)) n++;
-                if (GetVal(x + 1, y)) n++;
-                if (GetVal(x + 1, y + 1)) n++;
-            
+            if (GetVal(x - 1, y - 1)) n++;
+            if (GetVal(x - 1, y)) n++;
+            if (GetVal(x - 1, y + 1)) n++;
+            if (GetVal(x, y - 1)) n++;
+            if (GetVal(x, y + 1)) n++;
+            if (GetVal(x + 1, y - 1)) n++;
+            if (GetVal(x + 1, y)) n++;
+            if (GetVal(x + 1, y + 1)) n++;
             return n;
         }
 
@@ -63,9 +53,8 @@ namespace GameOfLife
             {
                 return Grid[x, y];
             }
-            catch (IndexOutOfRangeException ex)
+            catch (IndexOutOfRangeException)
             {
-                //Console.WriteLine(ex);
                 return false;
             }
         }
@@ -80,9 +69,9 @@ namespace GameOfLife
 
         public static void CheckLife()
         {
-            for (int ix = 0; ix < SizeX; ix++)
+            for (int ix = 0; ix < Grid.GetLength(0); ix++)
             {
-                for (int iy = 0; iy < SizeY; iy++)
+                for (int iy = 0; iy < Grid.GetLength(1); iy++)
                 {
                     Console.Write(GetNear(ix, iy));
                 }
@@ -92,13 +81,20 @@ namespace GameOfLife
 
         public static void MakingLife()
         {
-            for (int ix = 0; ix < SizeX; ix++)
+            for (int ix = 0; ix < Grid.GetLength(0); ix++)
             {
-                for (int iy = 0; iy < SizeY; iy++)
+                for (int iy = 0; iy < Grid.GetLength(1); iy++)
                 {
                     Grid[ix, iy] = Transform(GetNear(ix, iy), Grid[ix, iy]);
                 }
             }
+        }
+
+        public static int[] GetGridSize()
+        {
+            int x = Grid.GetLength(0);
+            int y = Grid.GetLength(1);
+            return new int[]{ x, y };
         }
 
     }
