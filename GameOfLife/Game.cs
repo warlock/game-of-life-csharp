@@ -90,12 +90,6 @@ namespace GameOfLife
             }
         }
 
-        public static int[] GetGridSize()
-        {
-            int x = Grid.GetLength(0);
-            int y = Grid.GetLength(1);
-            return new int[]{ x, y };
-        }
 
     }
 }

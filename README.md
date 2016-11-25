@@ -27,9 +27,6 @@ Obtain value in row.
 ###Transform(int x, int y)
 Change state with this row.
 
-###GetGridSize()
-Returns array with Grid size.
-
 
 ##Debug with Console.Write:
 ###PaintGrid
